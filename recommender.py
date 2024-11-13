@@ -17,6 +17,4 @@ def recommend(data, movies, actors):
     Example: {'The Dark Knight': 0.5, 'Se7en': 0.6}
   """
   
-  data = get_data()
-  
   return {}
