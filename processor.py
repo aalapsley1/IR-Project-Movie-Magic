@@ -8,14 +8,14 @@ def tokenize(text):
       Raw user query.
       Example: "A thrilling movie that has Morgan Freeman and is similar to The Dark Knight."
     
-  Returns: 
+  Returns:
+    genres:
+      A list of genres to search based on.
+      Example: ['horror', 'funny']
     keywords:
       A list of keywords to query by.
       Example: ['Thriller']
     movies:
       A list of movies to recommend by.
       Example: ['The Dark Knight']
-    actors:
-      A list of actors to recommend by.
-      Example: ['Morgan Freeman']
   """

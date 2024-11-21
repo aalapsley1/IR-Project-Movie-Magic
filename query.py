@@ -1,13 +1,16 @@
-def query(data, keywords):
+def query(data, genres, keywords):
   """
   Scores the movies based on the query keywords.
 
   Parameters:
     data:
       The movie data to score.
+    genres:
+      A list of genres to search based on.
+      Example: ['horror', 'funny']
     keywords:
       A list of keywords to search based on. 
-      Example: ['horror', 'funny']
+      Example: ['ship', 'island']
     
   Returns: 
     A dictionary of movie titles to scores. Should be normalized to range from -1 to 1. 

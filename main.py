@@ -10,12 +10,14 @@ def main():
   
   text = input()
   
-  keywords, movies, actors = tokenize(text)
+  genres, keywords, movies = tokenize(text)
   
-  query_scores = query(data, keywords)
-  recommender_scores = recommend(data, movies, actors)
+  query_scores = query(data, genre, keywords)
+  recommender_scores = recommend(data, movies)
   
   scores = balance(keywords, movies, actors, query_scores, recommender_scores)
+  
+  # Present the top 10 items or something.
 
 if __name__ == "__main__":
   main()
