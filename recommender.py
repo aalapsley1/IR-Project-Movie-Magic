@@ -1,6 +1,6 @@
 def recommend(data, movies):
   """
-  Scores the movies based on similarity to user's liked movie and actors.
+  Scores the movies based on similarity to user's liked movies.
 
   Parameters:
     data:
@@ -13,5 +13,8 @@ def recommend(data, movies):
     A dictionary of movie titles to scores. Should be normalized to range from -1 to 1. 
     Example: {'The Dark Knight': 0.5, 'Se7en': 0.6}
   """
+  to_return = {}
   
-  return {}
+  
+  
+  return to_return

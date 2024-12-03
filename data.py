@@ -27,11 +27,14 @@ def get_data():
   movie_data = movie_data.drop(["imdb_id","imdb_link", "image_url", "tmdb_id", "tmdb_link"], axis = 1)
   ratings_export = pd.read_csv("ratings_export.csv")
   users_export = pd.read_csv("users_export.csv")
-  print(movie_data.head())
+  print(ratings_export)
+  
+  # Get list of users
+  
   
 
 
   return movie_data, ratings_export, users_export
   
-download_data()
-#get_data()
+#download_data()
+get_data()
