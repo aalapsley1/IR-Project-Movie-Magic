@@ -74,7 +74,9 @@ class Query:
                     tf = float(description.count(keyword)) / len(description)
                     idf = self.keywords_idf.get(keyword) 
                     keyword_score += tf * idf
-            self.scores[movie[0]] = (0.5 * genre_score) + (0.5 * keyword_score)
+
+            title = "-".join(movie[2]) 
+            self.scores[title] = (0.5 * genre_score) + (0.5 * keyword_score)
 
         return self.scores
 
