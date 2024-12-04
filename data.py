@@ -33,9 +33,13 @@ def get_data():
   return movie_data, ratings_export, users_export
 
 def get_users():
+  
+  """
+  Returns list of users from ratings data
+  """
+  
   ratings_export = pd.read_csv("ratings_export.csv")
   
-  # Get list of users
   users = []
   i = 0
   for user in ratings_export['user_id']:
@@ -47,7 +51,24 @@ def get_users():
       print(str(round((i / 11078167) * 100)) + '%')
   
   print('Num users: ' + str(len(users)))
+  return users
+
+def get_movies():
+  """
+  Returns list of movies from movie data
+  """
+  
+  movie_data = pd.read_csv("movie_data.csv")
+  movie_data = movie_data.drop(["imdb_id","imdb_link", "image_url", "tmdb_id", "tmdb_link"], axis = 1)
+  
+  movies = [movie for movie in movie_data['movie_title']]
+  print('Num movies: ' + str(len(movies)))
+  
+  return movies
+  
+    
 
   
 #download_data()
-get_data()
+#get_data()
+get_movies()

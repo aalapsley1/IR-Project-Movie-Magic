@@ -1,3 +1,5 @@
+import data
+
 def recommend(data, movies):
   """
   Scores the movies based on similarity to user's liked movies.
@@ -15,6 +17,7 @@ def recommend(data, movies):
   """
   to_return = {}
   
+  users = data.get_users()
   
   
   return to_return
