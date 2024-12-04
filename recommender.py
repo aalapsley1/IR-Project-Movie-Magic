@@ -22,13 +22,10 @@ def recommend(data, movies):
   users, ratings_export = data.get_users()
   movies = data.get_movies()
   
-  # Create arrayof ratings where:
+  # Create array of ratings where:
   # ratings[i][j] is the movie movies[i] rating by user user[j]
   ratings = np.zeros((len(movies), len(users)))
   
-  for i in range(len(movies)):
-    for j in range(len(users)):
-      
         
   
   return to_return

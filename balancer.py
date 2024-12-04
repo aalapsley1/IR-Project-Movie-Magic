@@ -24,3 +24,19 @@ def balance(keywords, movies, actors, query_scores, recommender_scores):
     Should be normalized to range from -1 to 1. 
     Example: {'The Quiet Place': 0.3, 'Frankenstein (1931)': -0.1, 'The Dark Knight': 0.2, 'Se7en': 0.2}
   """
+  
+  final_scores = {}
+  
+  for q_movie in query_scores.keys():
+    if q_movie in recommender_scores.keys():
+      final_scores[q_movie] = (query_scores[q_movie] + recommender_scores[q_movie]) / 2
+    else:
+      final_scores[q_movie] = query_scores[q_movie] / 2
+  
+  for r_movie in recommender_scores.keys():
+    if r_movie not in final_scores.keys():
+      final_scores[r_movie] = recommender_scores[r_movie] / 2
+  
+  return final_scores
+      
+  

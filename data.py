@@ -40,6 +40,7 @@ def get_users():
   
   ratings_export = pd.read_csv("ratings_export.csv")
   
+  '''
   users = []
   i = 0
   for user in ratings_export['user_id']:
@@ -51,9 +52,18 @@ def get_users():
       print(str(round((i / 11078167) * 100)) + '%')
   
   print('Num users: ' + str(len(users)))
+  '''
   
+  user_dict = {}
+  for a, row_data in ratings_export.iterrows():
+    if row_data[3] not in user_dict.keys():
+      user_dict[row_data[3]] = [(row_data[1], row_data[2])]
+    else:
+      user_dict[row_data[3]].append((row_data[1], row_data[2]))
   
-  return users, ratings_export
+  print(user_dict['deathproof'])
+  
+  return user_dict, ratings_export
 
 def get_movies():
   """
@@ -73,4 +83,5 @@ def get_movies():
   
 #download_data()
 #get_data()
-get_movies()
+get_users()
+#get_movies()
