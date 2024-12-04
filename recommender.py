@@ -1,6 +1,7 @@
 import math
 from data import get_data
 import numpy as np
+import pandas as pd
 
 
 def recommend(data, movies):
@@ -30,39 +31,32 @@ def recommend(data, movies):
   for movie in movies:
     movie_ids.append(movies_export[movies_export["movie_title"] == movie]["movie_id"].item())
   print(movie_ids)
-  movie_indexes = []
+  # movie_indexes = []
+  # for id in movie_ids:
+  #   movie_indexes.append(ratings_matrix.columns.get_loc(id))
+  # print(movie_indexes)
+  
+  # num_cols = ratings_matrix.shape[1]
+  
+  # new_user = np.full([num_cols], np.nan)
+  # new_user[1] = 10.0
+  # for index in movie_indexes:
+  #   new_user[index] = 10.0
+  # print(new_user)
+  
+  new_user_id = "zzz_new_user"
+  new_user = {}
   for id in movie_ids:
-    movie_indexes.append(ratings_matrix.columns.get_loc(id))
-  print(movie_indexes)
+    new_user[id] = 10.0
   
-  correlations = np.corrcoef(ratings_matrix.T.values)
+  new_user = pd.DataFrame(new_user, index=[new_user_id])
+  ratings_matrix = pd.concat([ratings_matrix, new_user])
+  print(ratings_matrix)
+  
+  correlations = np.corrcoef(ratings_matrix.values)
   print(correlations)
-  
-  ratings = []
-  for corr in correlations:
-    total_weight = 0
-    total_rating = 0
-    for i in movie_indexes:
-      weight = corr[i]
-      if (math.isnan(weight) or weight <= 0):
-        continue
-      
-      total_weight += weight
-      total_rating += weight * 10 
 
-    if total_weight == 0:
-      ratings.append(5)
-    else:
-      ratings.append(total_rating / total_weight)
-
-  print(ratings)
-
-  columns = list(ratings_matrix.columns)
-  to_return = {}
-  for i in range(columns):
-    to_return[columns[i]] = ratings[i]
-
-  return to_return
+  return {}
 
 
 def main():
