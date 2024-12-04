@@ -1,4 +1,5 @@
 import data
+import numpy as np
 
 def recommend(data, movies):
   """
@@ -17,7 +18,17 @@ def recommend(data, movies):
   """
   to_return = {}
   
-  users = data.get_users()
+  # Get list of users and list of movies
+  users, ratings_export = data.get_users()
+  movies = data.get_movies()
   
+  # Create arrayof ratings where:
+  # ratings[i][j] is the movie movies[i] rating by user user[j]
+  ratings = np.zeros((len(movies), len(users)))
+  
+  for i in range(len(movies)):
+    for j in range(len(users)):
+      
+        
   
   return to_return

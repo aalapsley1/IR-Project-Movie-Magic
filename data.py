@@ -51,7 +51,9 @@ def get_users():
       print(str(round((i / 11078167) * 100)) + '%')
   
   print('Num users: ' + str(len(users)))
-  return users
+  
+  
+  return users, ratings_export
 
 def get_movies():
   """
@@ -61,7 +63,7 @@ def get_movies():
   movie_data = pd.read_csv("movie_data.csv")
   movie_data = movie_data.drop(["imdb_id","imdb_link", "image_url", "tmdb_id", "tmdb_link"], axis = 1)
   
-  movies = [movie for movie in movie_data['movie_title']]
+  movies = [movie for movie in movie_data['movie_id']]
   print('Num movies: ' + str(len(movies)))
   
   return movies
