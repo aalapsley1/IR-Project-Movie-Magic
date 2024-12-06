@@ -1,3 +1,5 @@
+import pandas as pd
+
 def balance(keywords, movies, actors, query_scores, recommender_scores):
   """
   Balances the movie scores based on received data.
@@ -25,18 +27,45 @@ def balance(keywords, movies, actors, query_scores, recommender_scores):
     Example: {'The Quiet Place': 0.3, 'Frankenstein (1931)': -0.1, 'The Dark Knight': 0.2, 'Se7en': 0.2}
   """
   
+  # Change movie_id to movie_title
+  movie_data = pd.read_csv("movie_data.csv")
+  r_scores = {}
+  q_scores = {}
+  
+  for rec in recommender_scores.keys():
+    for index,row in movie_data.iterrows():
+      if rec == row['movie_id']:
+          r_scores[row['movie_title']] = recommender_scores[rec]
+          break
+  
+  for q in query_scores.keys():
+    for index,row in movie_data.iterrows():
+      if q == row['movie_id']:
+          q_scores[row['movie_title']] = query_scores[q]
+          break
+  
+  
+  # Averaging scores of movies appearing in both lists
   final_scores = {}
-  
-  for q_movie in query_scores.keys():
-    if q_movie in recommender_scores.keys():
-      final_scores[q_movie] = (query_scores[q_movie] + recommender_scores[q_movie]) / 2
+  other_scores = {}
+
+  for q_movie in q_scores.keys():
+    if q_movie in r_scores.keys():
+      final_scores[q_movie] = (q_scores[q_movie] + r_scores[q_movie]) / 2
     else:
-      final_scores[q_movie] = query_scores[q_movie] / 2
+      other_scores[q_movie] = q_scores[q_movie] * 0.5
   
-  for r_movie in recommender_scores.keys():
+  # Storing scores of movies only in one of the lists, dampening by 0.5 (query above, rec below)
+  for r_movie in r_scores.keys():
     if r_movie not in final_scores.keys():
-      final_scores[r_movie] = recommender_scores[r_movie] / 2
+      other_scores[r_movie] = r_scores[r_movie] * 0.5
   
-  return final_scores
+  
+  
+  return final_scores, other_scores
       
-  
+q_scores = {'i-lost-my-m-in-vegas': 0.5, 'how-will-you-die': 0.1, 'drillbit': -0.3, 'circus-savage': -0.7, 'the-art-of-filmmaking': 0.8}
+r_scores = {'i-lost-my-m-in-vegas': 0.3, 'drillbit': 0.5, 'circus-savage': -0.5, 'the-bus-1961': 0.3}
+f_scores, o_scores = balance(None, None, None, q_scores, r_scores)
+print(f_scores)
+print(o_scores)
