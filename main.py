@@ -27,10 +27,10 @@ def main():
   
   # Print the top 5 movies.
   sorted_movies = sorted(final_scores.keys(), key = lambda k: final_scores[k], reverse=True)
+  to_print = ''
   
   if len(sorted_movies) < 5:
     sorted_others = sorted(other_scores.keys(), key = lambda k: other_scores[k], reverse=True)
-    to_print = ''
     i = 0
     for movie in sorted_movies:
       to_print += str(i) + '. ' + movie + '\n'
