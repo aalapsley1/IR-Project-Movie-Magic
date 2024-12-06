@@ -10,10 +10,10 @@ def main():
   
   text = input('Enter your movie prompt: ')
   
-  genres, keywords, movies = tokenize(text)
+  genres, keywords, good_movies, bad_movies = tokenize(text)
   
   query_scores = query(data, genres, keywords)
-  recommender_scores = recommend(data, movies)
+  recommender_scores = recommend(data, good_movies, bad_movies)
   
   scores = balance(keywords, movies, query_scores, recommender_scores)
   
