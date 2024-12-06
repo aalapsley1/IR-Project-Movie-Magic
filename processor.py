@@ -9,10 +9,10 @@ class Processor:
 
     def tokenize(self, text):
         # Regex to find each attribute set within the localGPT output
-        liked_movies_pattern = r"(liked[_\s]?movies\s*[:=]\s*\[.*?\])"
-        disliked_movies_pattern = r"(disliked[_\s]?movies\s*[:=]\s*\[.*?\])"
-        genres_pattern = r"(genres\s*[:=]\s*\[.*?\])"
-        keywords_pattern = r"(keywords\s*[:=]\s*\[.*?\])"
+        liked_movies_pattern = r"([\"'{\[]?liked[_\s]?movies[\"'}\]]?\s*[:=]\s*.*?\[.*?\])"
+        disliked_movies_pattern = r"([\"'{\[]?disliked[_\s]?movies[\"'}\]]?\s*[:=]\s*.*?\[.*?\])"
+        genres_pattern = r"([\"'{\[]?genres[\"'}\]]?\s*[:=]\s*.*?\[.*?\])"
+        keywords_pattern = r"([\"'{\[]?keywords[\"'}\]]?\s*.*?\[:=]\s*.*?\[.*?\])"
 
         # Find matches in the localGPT out
         liked_movies_match = re.search(liked_movies_pattern, text, re.IGNORECASE)
@@ -37,7 +37,7 @@ class Processor:
 
 
 text = """
-User: Based on the query I am about to give you, please separate parts of the query into multiple sets (sets can be empty). First is liked movies, second is disliked movies, third is genres (if the adjective is not a movie genre like "humorous", translate to a real movie genre that is the closest synonymically). Fourth are keywords, these are the adjectives (as is) in the query. The items can be placed into the group sets like this [a] surrounded by brackets and with multiple entries within the brackets being separated by a comma. Here is the query "Recommend me a feel-good movie like Serotonin, but I didn't enjoy Collateral Beauty." ```python liked_movies = ["Serotonin"] disliked_movies = ["Collateral Beauty"] genres = [] keywords = ["feel-good"] [a] = liked_movies, disliked_movies, genres, keywords ```
+DBased on your provided context, here are the recommendations organized into the four distinct categories you requested: "Liked Movies": ["Inception", "The Shawshank Redemption", "The Dark Knight", "Interstellar", "Parasite", "Whiplash", "The Matrix", "The Godfather", "Spirited Away", "The Grand Budapest Hotel"] "Disliked Movies": ["Transformers: Age of Extinction", "Twilight", "The Room", "Cats", "Battlefield Earth", "Fifty Shades of Grey", "Sharknado"] "Genres": ["Sci-Fi", "Thriller", "Action", "Crime", "Drama", "Comedy", "Animation", "Fantasy", "Adventure", "Romance", "Musical"] "Keywords": ["amazing", "deeply moving", "thrilling", "captivating", "mind-blowing", "brilliantly crafted", "intensely inspiring", "groundbreaking", "masterpiece", "enchanting", "delightfully quirky", "tedious", "overblown", "overly dramatic", "unimpressive", "laughable", "unbearable", "terrible", "awkward", "engaging"]
 """
 
 #init processor & tokenize example text
