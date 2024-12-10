@@ -65,15 +65,17 @@ class Query:
 
             for genre in query_genres:
                 if genres != []:
-                    tf = float(genres.count(genre)) / len(genres)
-                    idf = self.genres_idf.get(genre)
-                    genre_score += tf * idf
+                    if genres.count(genre):
+                        tf = float(genres.count(genre)) / len(genres)
+                        idf = self.genres_idf.get(genre)
+                        genre_score += tf * idf
 
             for keyword in query_keywords:
                 if description != []:
-                    tf = float(description.count(keyword)) / len(description)
-                    idf = self.keywords_idf.get(keyword) 
-                    keyword_score += tf * idf
+                    if description.count(keyword):
+                        tf = float(description.count(keyword)) / len(description)
+                        idf = self.keywords_idf.get(keyword) 
+                        keyword_score += tf * idf
 
             title = "-".join(movie[2]) 
             self.scores[title] = (0.5 * genre_score) + (0.5 * keyword_score)
@@ -86,11 +88,10 @@ class Query:
         query_genres = re.sub(r"[^a-z0-9 ]", " ", str(genres).lower()).split()
         result = self.tf_idf(query_keywords, query_genres)
         sorted_result = sorted(result.items(), key=lambda x: -x[1])
-        print(sorted_result[:10])
+        #print(sorted_result[:10])
         return result
     
-    def data(self):
-        movie_data = pd.read_csv("movie_data.csv")
+    def data(self, movie_data):
         movie_data = movie_data.drop(
             [
                 "image_url", "imdb_id", "imdb_link", "original_language", "popularity",
@@ -99,17 +100,19 @@ class Query:
             ], axis=1)
         return movie_data
     
-    def set_up(self):
-        movie_data = self.data()
+    def run_query(self, data, keywords, genres):
+        movie_data = self.data(data)
         self.tokenize(movie_data)
         self.compute_idf()
+        results = self.query(keywords, genres)
+        return results
 
 
 # Main function
 def main(args):
     q = Query()
-    q.set_up()
-    result = q.query("Football crazy, football mad. Don’t watch this off-beat jukebox cartoon expecting any conventional soccer action. Equal parts Disney, Dali and Duchamp, this abstract mix of black and white photos and alternative comix style animation is accompanied by a medley of doo-wop classics and documentary soundbites.  The film is certainly an extreme departure for those familiar with the more conventional output of the Halas & Batchelor studio, best known for their feature-length version of George Orwell’s Animal Farm (1954). Paul Vester was one of a number of sixties art school graduates that brought a mix of pop art and illustration influences to the company whilst it was undergoing a brief change in its ownership. As a warning, in keeping with its progressive, adult style there is some brief nudity at the end of the film.", "Music animation")
+    movie_data = pd.read_csv("movie_data.csv")
+    result = q.run_query(movie_data, ["tehsadlt", "Football", "crazy", "football", "mad", "Don’t", "watch", "this", "off-beat", "jukebox", "cartoon", "expecting", "any", "conventional", "soccer", "action", "Equal", "parts", "Disney", "Dali", "and", "Duchamp", "this", "abstract", "mix", "of", "black", "and", "white", "photos", "and", "alternative", "comix", "style", "animation", "is", "accompanied", "by", "a", "medley", "of", "doo-wop", "classics",  "and", "documentary", "soundbites",  "The", "film", "is", "certainly", "an", "extreme", "departure", "for", "those", "familiar", "with", "the", "more", "conventional", "output", "of", "the", "Halas", "Batchelor", "studio", "best", "known", "for", "their", "feature-length", "version", "of", "George", "Orwell’s", "Animal", "Farm", "Paul", "Vester", "was", "one", "of", "a", "number", "of", "sixties", "art", "school", "graduates", "that", "brought", "a", "mix", "of", "pop", "art", "and", "illustration", "influences", "to", "the", "company", "whilst", "it", "was", "undergoing", "a", "brief", "change", "in", "its", "ownership", "As", "a", "warning", "in", "keeping", "with", "its", "progressive", "adult", "style", "there", "is", "some", "brief", "nudity", "at", "the", "end", "of", "the", "film"], ["Music", "animation"])
     print(result)
 
 

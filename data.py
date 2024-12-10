@@ -22,13 +22,13 @@ def get_data():
   Loads and returns the data in panda dataframes.
   """
   
-  movies_export = pd.read_csv("movie_data.csv")
-  movies_export = movies_export.drop(["imdb_id","imdb_link", "image_url", "tmdb_id", "tmdb_link"], axis = 1)
-  movies_export = movies_export[movies_export["year_released"].notna()]
+  movies_data = pd.read_csv("movie_data.csv")
+  movies_data = movies_data.drop(["imdb_id","imdb_link", "image_url", "tmdb_id", "tmdb_link"], axis = 1)
+  movies_data = movies_data[movies_data["year_released"].notna()]
   ratings_export = pd.read_csv("ratings_export.csv")
   users_export = pd.read_csv("users_export.csv")
   
-  return movies_export, ratings_export, users_export
+  return movies_data, ratings_export, users_export
 
 def get_users():
   

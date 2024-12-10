@@ -1,8 +1,9 @@
 from data import get_data
 from recommender import recommend
-import query
+from query import Query
 from processor import tokenize
 from balancer import balance
+import pandas as pd
 
 def main():
   
@@ -11,13 +12,12 @@ def main():
   text = input('Enter your movie prompt: ')
   
   # Send to GPT
-  
-  # GPT outputs
   liked_movies, disliked_movies, genres, keywords = []
 
   # Get query scores
-  q = query.Query(genres, keywords)
-  query_scores = q.query()
+  movie_data = pd.read_csv("movie_data.csv")
+  q = Query()
+  query_scores = q.run_query(movie_data, genres, keywords)
   
   # Get recommender scores
   recommender_scores = recommend(data, liked_movies, disliked_movies)
