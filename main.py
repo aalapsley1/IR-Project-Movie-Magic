@@ -3,6 +3,7 @@ from recommender import recommend
 from query import Query
 from processor import tokenize
 from balancer import balance
+import pandas as pd
 
 def main():
   
@@ -12,7 +13,7 @@ def main():
   text = input('Enter your movie prompt: ')
   
   genres, keywords, movies = tokenize(text)
-  
+  movie_data = pd.read_csv("movie_data.csv")
   q = Query()
   query_scores = q.run_query(movie_data, genres, keywords)
   recommender_scores = recommend(movie_data, movies)
