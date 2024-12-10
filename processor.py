@@ -35,17 +35,33 @@ class Processor:
         self.genres = extract_list(genres_match)
         self.keywords = extract_list(keywords_match)
 
+    def getLikedMovies(self):
+        return self.liked_movies
+    
+    def getDislikedMovies(self):
+        return self.disliked_movies
+    
+    def getKeywords(self):
+        return self.keywords
+    
+    def getGenres(self):
+        return self.genres
+    
+    def recvQuery(self, text):
+        origQuery = text
+        self.tokenize(text)
 
-text = """
-DBased on your provided context, here are the recommendations organized into the four distinct categories you requested: "Liked Movies": ["Inception", "The Shawshank Redemption", "The Dark Knight", "Interstellar", "Parasite", "Whiplash", "The Matrix", "The Godfather", "Spirited Away", "The Grand Budapest Hotel"] "Disliked Movies": ["Transformers: Age of Extinction", "Twilight", "The Room", "Cats", "Battlefield Earth", "Fifty Shades of Grey", "Sharknado"] "Genres": ["Sci-Fi", "Thriller", "Action", "Crime", "Drama", "Comedy", "Animation", "Fantasy", "Adventure", "Romance", "Musical"] "Keywords": ["amazing", "deeply moving", "thrilling", "captivating", "mind-blowing", "brilliantly crafted", "intensely inspiring", "groundbreaking", "masterpiece", "enchanting", "delightfully quirky", "tedious", "overblown", "overly dramatic", "unimpressive", "laughable", "unbearable", "terrible", "awkward", "engaging"]
-"""
+
+#text = """
+#DBased on your provided context, here are the recommendations organized into the four distinct categories you requested: "Liked Movies": ["Inception", "The Shawshank Redemption", "The Dark Knight", "Interstellar", "Parasite", "Whiplash", "The Matrix", "The Godfather", "Spirited Away", "The Grand Budapest Hotel"] "Disliked Movies": ["Transformers: Age of Extinction", "Twilight", "The Room", "Cats", "Battlefield Earth", "Fifty Shades of Grey", "Sharknado"] "Genres": ["Sci-Fi", "Thriller", "Action", "Crime", "Drama", "Comedy", "Animation", "Fantasy", "Adventure", "Romance", "Musical"] "Keywords": ["amazing", "deeply moving", "thrilling", "captivating", "mind-blowing", "brilliantly crafted", "intensely inspiring", "groundbreaking", "masterpiece", "enchanting", "delightfully quirky", "tedious", "overblown", "overly dramatic", "unimpressive", "laughable", "unbearable", "terrible", "awkward", "engaging"]
+#"""
 
 #init processor & tokenize example text
-tokenizer = Processor()
-tokenizer.tokenize(text)
+#tokenizer = Processor()
+#tokenizer.tokenize(text)
 
 # Output the parsed movie components
-print("Liked Movies:", tokenizer.liked_movies)
-print("Disliked Movies:", tokenizer.disliked_movies)
-print("Genres:", tokenizer.genres)
-print("Keywords:", tokenizer.keywords)
+#print("Liked Movies:", tokenizer.liked_movies)
+#print("Disliked Movies:", tokenizer.disliked_movies)
+#print("Genres:", tokenizer.genres)
+#print("Keywords:", tokenizer.keywords)
