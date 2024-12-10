@@ -22,9 +22,8 @@ def get_data():
   """
   Loads and returns the data in panda dataframes.
   """
-
   movie_data = pd.read_csv("movie_data.csv")
-  movie_data = movie_data.drop(["imdb_id","imdb_link", "image_url", "tmdb_id", "tmdb_link"], axis = 1)
+  #movie_data = movie_data.drop(["image_url","imdb_id","imdb_link", "image_url","original_language","popularity","production_countries","release_date","runtime","spoken_languages", "tmdb_id", "tmdb_link", "vote_average","vote_count","year_released"], axis = 1)
   ratings_export = pd.read_csv("ratings_export.csv")
   users_export = pd.read_csv("users_export.csv")
   
