@@ -1,10 +1,6 @@
 import pandas as pd
 import kagglehub
 
-# Download latest version
-
-
-
 def download_data():
 
   '''
@@ -14,8 +10,6 @@ def download_data():
   '''
   path = kagglehub.dataset_download("samlearner/letterboxd-movie-ratings-data")
   print("Path to dataset files:", path)
-  pass
-
 
 def get_data():
   """
@@ -75,11 +69,3 @@ def get_movies():
   print('Num movies: ' + str(len(movies)))
   
   return movies
-  
-    
-
-  
-#download_data()
-#get_data()
-get_users()
-#get_movies()

@@ -4,9 +4,7 @@ import random
 from surprise import Dataset, SVD, Reader
 from surprise.model_selection import train_test_split
 from data import get_data
-import numpy as np
 import pandas as pd
-
 
 def recommend(data, good_movies, bad_movies):
   """
@@ -38,14 +36,20 @@ def recommend(data, good_movies, bad_movies):
   new_user_movie_ids = []
   new_user_ratings = []
   for movie in good_movies:
-    new_user_user_ids.append(new_user_id)
-    new_user_movie_ids.append(movies_export[movies_export["movie_title"] == movie]["movie_id"].item())
-    new_user_ratings.append(float(random.randint(8, 10)))
+    try:
+      new_user_movie_ids.append(movies_export[movies_export["movie_title"] == movie]["movie_id"].item())
+      new_user_user_ids.append(new_user_id)
+      new_user_ratings.append(float(random.randint(8, 10)))
+    except ValueError as e:
+      print(f"WARNING: Could not find movie {movie}")
     
   for movie in bad_movies:
-    new_user_user_ids.append(new_user_id)
-    new_user_movie_ids.append(movies_export[movies_export["movie_title"] == movie]["movie_id"].item())
-    new_user_ratings.append(float(random.randint(1, 3)))
+    try:
+      new_user_movie_ids.append(movies_export[movies_export["movie_title"] == movie]["movie_id"].item())
+      new_user_user_ids.append(new_user_id)
+      new_user_ratings.append(float(random.randint(1, 3)))
+    except ValueError as e:
+      print(f"WARNING: Could not find movie {movie}")
     
   print("Prepare new user.")
     
@@ -75,11 +79,19 @@ def recommend(data, good_movies, bad_movies):
 
 def main():
   
+  print("Getting data.")
   data = get_data()
   
-  example_movies_0 = ['The Dark Knight', 'Justice League'] 
-  example_movies_1 = ['Jaws 2']
-  recommender_scores_0 = run_and_print_info(data, example_movies_0, example_movies_1)
+  # liked_movies_0 = ['The Dark Knight', 'Justice League'] 
+  # disliked_movies_0 = ['Jaws 2']
+  # recommender_scores_0 = run_and_print_info(data, liked_movies_0, disliked_movies_0)
+  
+  liked_movies_1 = ["Inception", "The Shawshank Redemption", "The Dark Knight", "Interstellar", "Parasite", "Whiplash", "The Matrix", "The Godfather", "Spirited Away", "The Grand Budapest Hotel"] 
+  disliked_movies_1 = ["Transformers: Age of Extinction", "Twilight", "The Room", "Cats", "Battlefield Earth", "Fifty Shades of Grey", "Sharknado"] 
+  genres_1 = ["Sci-Fi", "Thriller", "Action", "Crime", "Drama", "Comedy", "Animation", "Fantasy", "Adventure", "Romance", "Musical"] 
+  keywords_1 = ["amazing", "deeply moving", "thrilling", "captivating", "mind-blowing", "brilliantly crafted", "intensely inspiring", "groundbreaking", "masterpiece", "enchanting", "delightfully quirky", "tedious", "overblown", "overly dramatic", "unimpressive", "laughable", "unbearable", "terrible", "awkward", "engaging"]
+  recommender_scores_1 = run_and_print_info(data, liked_movies_1, disliked_movies_1)
+  
   
 def run_and_print_info(data, good_movies, bad_movies):
   recommender_scores = recommend(data, good_movies, bad_movies)
