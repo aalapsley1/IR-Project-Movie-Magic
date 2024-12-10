@@ -20,7 +20,7 @@ def main():
   query_scores = q.query()
   
   # Get recommender scores
-  recommender_scores = recommend(liked_movies, disliked_movies)
+  recommender_scores = recommend(data, liked_movies, disliked_movies)
   
   # Get final scores
   final_scores, other_scores = balance(query_scores, recommender_scores)
