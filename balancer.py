@@ -83,8 +83,12 @@ def balance(query_scores, recommender_scores):
   
   return final_scores, other_scores
       
-q_scores = {'i-lost-my-m-in-vegas': 0.5, 'how-will-you-die': 0.1, 'drillbit': -0.3, 'circus-savage': -0.7, 'the-art-of-filmmaking': 0.8}
-r_scores = {'i-lost-my-m-in-vegas': 0.3, 'drillbit': 0.5, 'circus-savage': -0.5, 'the-bus-1961': 0.3}
-f_scores, o_scores = balance(q_scores, r_scores)
-print(f_scores)
-print(o_scores)
+def main():
+  q_scores = {'i-lost-my-m-in-vegas': 0.5, 'how-will-you-die': 0.1, 'drillbit': -0.3, 'circus-savage': -0.7, 'the-art-of-filmmaking': 0.8}
+  r_scores = {'i-lost-my-m-in-vegas': 0.3, 'drillbit': 0.5, 'circus-savage': -0.5, 'the-bus-1961': 0.3}
+  f_scores, o_scores = balance(q_scores, r_scores)
+  print(f_scores)
+  print(o_scores)
+  
+if __name__ == "__main__":
+  main()

@@ -3,3 +3,4 @@ ratings_export.csv
 users_export.csv
 __pycache__/data.cpython-311.pyc
 localGPT/
+__pycache__/
