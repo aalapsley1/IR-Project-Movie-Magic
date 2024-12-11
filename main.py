@@ -40,8 +40,8 @@ def main():
   print("Balancing scores.")
   final_scores, other_scores = balance(query_scores, recommender_scores)
   
-  # Print the top 5 movies.
-  print("Getting top 5 movies.")
+  # Print the top 10 movies.
+  print("Getting top 10 movies.")
   sorted_movies = sorted(final_scores.keys(), key = lambda k: final_scores[k], reverse=True)
   
   final_recs = []
@@ -59,7 +59,7 @@ def main():
     final_recs = sorted_movies[:10]
   
   final_recs_titles = [id_to_title(movie) for movie in final_recs]
-  print("Top 5 movies:")
+  print("Top 10 movies:")
   print(final_recs_titles)
   
   return final_recs_titles
