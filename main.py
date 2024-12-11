@@ -2,7 +2,7 @@ from data import get_data
 from recommender import recommend
 from query import Query
 from processor import Processor
-from balancer import balance
+from balancer import balance, id_to_title
 import pandas as pd
 
 def main():
@@ -43,24 +43,28 @@ def main():
   # Print the top 5 movies.
   print("Getting top 5 movies.")
   sorted_movies = sorted(final_scores.keys(), key = lambda k: final_scores[k], reverse=True)
-  to_print = ''
   
-  if len(sorted_movies) < 5:
+  final_recs = []
+  
+  if len(sorted_movies) < 10:
     sorted_others = sorted(other_scores.keys(), key = lambda k: other_scores[k], reverse=True)
-    i = 0
-    for movie in sorted_movies:
-      to_print += str(i + 1) + '. ' + movie + '\n'
+    i = len(sorted_movies)
+    j = 0
+    final_recs = sorted_movies
+    while i < 10:
+      final_recs.append(sorted_others[j])
       i += 1
-    for omovie in sorted_others:
-      if i >= 5:
-        break
-      to_print += str(i + 1) + '. ' + omovie + '\n'
-      i += 1
+      j += 1
   else:
-    for i in range(5):
-      to_print += str(i + 1) + '. ' + sorted_movies[i] + '\n'
+    final_recs = sorted_movies[:10]
   
-  print(to_print)
+  final_recs_titles = [id_to_title(movie) for movie in final_recs]
+  print("Top 5 movies:")
+  print(final_recs_titles)
+  
+  return final_recs_titles
+
+  
   
 
 if __name__ == "__main__":

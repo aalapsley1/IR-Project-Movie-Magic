@@ -27,23 +27,8 @@ def balance(query_scores, recommender_scores):
     Example: {'The Quiet Place': 0.3, 'Frankenstein (1931)': -0.1, 'The Dark Knight': 0.2, 'Se7en': 0.2}
   """
   
-  # Change movie_id to movie_title
-  movie_data = pd.read_csv("movie_data.csv")
   r_scores = recommender_scores # {}
   q_scores = query_scores # {}
-  
-  # for rec in recommender_scores.keys():
-  #   for index,row in movie_data.iterrows():
-  #     if rec == row['movie_id']:
-  #         r_scores[row['movie_title']] = recommender_scores[rec]
-  #         break
-  
-  # for q in query_scores.keys():
-  #   for index,row in movie_data.iterrows():
-  #     if q == row['movie_id']:
-  #         q_scores[row['movie_title']] = query_scores[q]
-  #         break
-  
   
   # Averaging scores of movies appearing in both lists
   final_scores = {}
@@ -61,33 +46,38 @@ def balance(query_scores, recommender_scores):
       other_scores[r_movie] = r_scores[r_movie] * 0.5
   
   return final_scores, other_scores
+
       
 def main():
-  q_scores = {'i-lost-my-m-in-vegas': 0.5, 'how-will-you-die': 0.1, 'drillbit': -0.3, 'circus-savage': -0.7, 'the-art-of-filmmaking': 0.8}
-  r_scores = {'i-lost-my-m-in-vegas': 0.3, 'drillbit': 0.5, 'circus-savage': -0.5, 'the-bus-1961': 0.3}
-  f_scores, o_scores = balance(q_scores, r_scores)
-  print(f_scores)
-  print(o_scores)
+  final_scores = {'i-lost-my-m-in-vegas': 0.5, 'how-will-you-die': 0.1, 'drillbit': -0.3, 'circus-savage': -0.7, 'the-art-of-filmmaking': 0.8, 'the-cartographer': 0.5}
+  other_scores = {'elements-of-nothing': 0.3, 'a-mal-gam-a': 0.5, 'give-us-the-moon': -0.5, 'the-bus-1961': 0.3, 'lil-spider-girl': 0.9}
   
-  sorted_movies = sorted(f_scores.keys(), key = lambda k: f_scores[k], reverse=True)
+  sorted_movies = sorted(final_scores.keys(), key = lambda k: final_scores[k], reverse=True)
   
-  if len(sorted_movies) < 5:
-    sorted_others = sorted(o_scores.keys(), key = lambda k: o_scores[k], reverse=True)
-    to_print = ''
-    i = 0
-    for movie in sorted_movies:
-      to_print += str(i + 1) + '. ' + movie + '\n'
+  final_recs = []
+  
+  if len(sorted_movies) < 10:
+    sorted_others = sorted(other_scores.keys(), key = lambda k: other_scores[k], reverse=True)
+    i = len(sorted_movies)
+    j = 0
+    final_recs = sorted_movies
+    while i < 10:
+      final_recs.append(sorted_others[j])
       i += 1
-    for omovie in sorted_others:
-      if i >= 5:
-        break
-      to_print += str(i + 1) + '. ' + omovie + '\n'
-      i += 1
+      j += 1
   else:
-    for i in range(5):
-      to_print += str(i + 1) + '. ' + sorted_movies[i] + '\n'
+    final_recs = sorted_movies[:10]
   
-  print(to_print)
+  final_recs_titles = [id_to_title(movie) for movie in final_recs]
+  print(final_recs_titles)
+
+def id_to_title(id):
+  movie_data = pd.read_csv("movie_data.csv")
+  
+  for index,row in movie_data.iterrows():
+    if id == row['movie_id']:
+      return row['movie_title']
+      
   
 if __name__ == "__main__":
   main()
