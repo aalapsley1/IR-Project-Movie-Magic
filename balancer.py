@@ -29,20 +29,20 @@ def balance(query_scores, recommender_scores):
   
   # Change movie_id to movie_title
   movie_data = pd.read_csv("movie_data.csv")
-  r_scores = {}
-  q_scores = {}
+  r_scores = recommender_scores # {}
+  q_scores = query_scores # {}
   
-  for rec in recommender_scores.keys():
-    for index,row in movie_data.iterrows():
-      if rec == row['movie_id']:
-          r_scores[row['movie_title']] = recommender_scores[rec]
-          break
+  # for rec in recommender_scores.keys():
+  #   for index,row in movie_data.iterrows():
+  #     if rec == row['movie_id']:
+  #         r_scores[row['movie_title']] = recommender_scores[rec]
+  #         break
   
-  for q in query_scores.keys():
-    for index,row in movie_data.iterrows():
-      if q == row['movie_id']:
-          q_scores[row['movie_title']] = query_scores[q]
-          break
+  # for q in query_scores.keys():
+  #   for index,row in movie_data.iterrows():
+  #     if q == row['movie_id']:
+  #         q_scores[row['movie_title']] = query_scores[q]
+  #         break
   
   
   # Averaging scores of movies appearing in both lists

@@ -7,22 +7,24 @@ import pandas as pd
 
 def main():
   
+  print("Getting data.")
   data = get_data()
   
-  # text = input('Enter your movie prompt: ')
+  text = input('Enter your movie prompt: ')
   
   # # Send to GPT
-  # parseProc = Processor()
-  # parseProc.recvQuery(text)
-  # liked_movies = parseProc.getLikedMovies()
-  # disliked_movies = parseProc.getDislikedMovies()
-  # genres = parseProc.getGenres()
-  # keywords = parseProc.getKeywords()
+  print("Processing text with gpt.")
+  parseProc = Processor()
+  parseProc.recvQuery(text)
+  liked_movies = parseProc.getLikedMovies()
+  disliked_movies = parseProc.getDislikedMovies()
+  genres = parseProc.getGenres()
+  keywords = parseProc.getKeywords()
   
-  liked_movies = ["Inception", "The Shawshank Redemption", "The Dark Knight", "Interstellar", "Parasite", "Whiplash", "The Matrix", "The Godfather", "Spirited Away", "The Grand Budapest Hotel"] 
-  disliked_movies = ["Transformers: Age of Extinction", "Twilight", "The Room", "Cats", "Battlefield Earth", "Fifty Shades of Grey", "Sharknado"] 
-  genres = ["Sci-Fi", "Thriller", "Action", "Crime", "Drama", "Comedy", "Animation", "Fantasy", "Adventure", "Romance", "Musical"] 
-  keywords = ["amazing", "deeply moving", "thrilling", "captivating", "mind-blowing", "brilliantly crafted", "intensely inspiring", "groundbreaking", "masterpiece", "enchanting", "delightfully quirky", "tedious", "overblown", "overly dramatic", "unimpressive", "laughable", "unbearable", "terrible", "awkward", "engaging"]
+  # liked_movies = ["Inception", "The Shawshank Redemption", "The Dark Knight", "Interstellar", "Parasite", "Whiplash", "The Matrix", "The Godfather", "Spirited Away", "The Grand Budapest Hotel"] 
+  # disliked_movies = ["Transformers: Age of Extinction", "Twilight", "The Room", "Cats", "Battlefield Earth", "Fifty Shades of Grey", "Sharknado"] 
+  # genres = ["Sci-Fi", "Thriller", "Action", "Crime", "Drama", "Comedy", "Animation", "Fantasy", "Adventure", "Romance", "Musical"] 
+  # keywords = ["amazing", "deeply moving", "thrilling", "captivating", "mind-blowing", "brilliantly crafted", "intensely inspiring", "groundbreaking", "masterpiece", "enchanting", "delightfully quirky", "tedious", "overblown", "overly dramatic", "unimpressive", "laughable", "unbearable", "terrible", "awkward", "engaging"]
 
   # Get query scores
   print("Getting query scores.")
