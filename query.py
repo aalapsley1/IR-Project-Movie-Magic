@@ -88,6 +88,10 @@ class Query:
         query_genres = re.sub(r"[^a-z0-9 ]", " ", str(genres).lower()).split()
         result = self.tf_idf(query_keywords, query_genres)
         sorted_result = sorted(result.items(), key=lambda x: -x[1])
+        max = sorted_result[0][1]
+        #print(max)
+        for a in result:
+            result[a] = (result[a]/max) * 2 - 1
         #print(sorted_result[:10])
         return result
     
@@ -113,7 +117,8 @@ def main(args):
     q = Query()
     movie_data = pd.read_csv("movie_data.csv")
     result = q.run_query(movie_data, ["tehsadlt", "Football", "crazy", "football", "mad", "Don’t", "watch", "this", "off-beat", "jukebox", "cartoon", "expecting", "any", "conventional", "soccer", "action", "Equal", "parts", "Disney", "Dali", "and", "Duchamp", "this", "abstract", "mix", "of", "black", "and", "white", "photos", "and", "alternative", "comix", "style", "animation", "is", "accompanied", "by", "a", "medley", "of", "doo-wop", "classics",  "and", "documentary", "soundbites",  "The", "film", "is", "certainly", "an", "extreme", "departure", "for", "those", "familiar", "with", "the", "more", "conventional", "output", "of", "the", "Halas", "Batchelor", "studio", "best", "known", "for", "their", "feature-length", "version", "of", "George", "Orwell’s", "Animal", "Farm", "Paul", "Vester", "was", "one", "of", "a", "number", "of", "sixties", "art", "school", "graduates", "that", "brought", "a", "mix", "of", "pop", "art", "and", "illustration", "influences", "to", "the", "company", "whilst", "it", "was", "undergoing", "a", "brief", "change", "in", "its", "ownership", "As", "a", "warning", "in", "keeping", "with", "its", "progressive", "adult", "style", "there", "is", "some", "brief", "nudity", "at", "the", "end", "of", "the", "film"], ["Music", "animation"])
-    print(result)
+    #print(result)
+    return result
 
 
 if __name__ == "__main__":
