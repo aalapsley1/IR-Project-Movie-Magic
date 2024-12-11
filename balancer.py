@@ -60,11 +60,19 @@ def balance(query_scores, recommender_scores):
     if r_movie not in final_scores.keys():
       other_scores[r_movie] = r_scores[r_movie] * 0.5
   
+  return final_scores, other_scores
+      
+def main():
+  q_scores = {'i-lost-my-m-in-vegas': 0.5, 'how-will-you-die': 0.1, 'drillbit': -0.3, 'circus-savage': -0.7, 'the-art-of-filmmaking': 0.8}
+  r_scores = {'i-lost-my-m-in-vegas': 0.3, 'drillbit': 0.5, 'circus-savage': -0.5, 'the-bus-1961': 0.3}
+  f_scores, o_scores = balance(q_scores, r_scores)
+  print(f_scores)
+  print(o_scores)
   
-  sorted_movies = sorted(final_scores.keys(), key = lambda k: final_scores[k], reverse=True)
+  sorted_movies = sorted(f_scores.keys(), key = lambda k: f_scores[k], reverse=True)
   
   if len(sorted_movies) < 5:
-    sorted_others = sorted(other_scores.keys(), key = lambda k: other_scores[k], reverse=True)
+    sorted_others = sorted(o_scores.keys(), key = lambda k: o_scores[k], reverse=True)
     to_print = ''
     i = 0
     for movie in sorted_movies:
@@ -80,15 +88,6 @@ def balance(query_scores, recommender_scores):
       to_print += str(i + 1) + '. ' + sorted_movies[i] + '\n'
   
   print(to_print)
-  
-  return final_scores, other_scores
-      
-def main():
-  q_scores = {'i-lost-my-m-in-vegas': 0.5, 'how-will-you-die': 0.1, 'drillbit': -0.3, 'circus-savage': -0.7, 'the-art-of-filmmaking': 0.8}
-  r_scores = {'i-lost-my-m-in-vegas': 0.3, 'drillbit': 0.5, 'circus-savage': -0.5, 'the-bus-1961': 0.3}
-  f_scores, o_scores = balance(q_scores, r_scores)
-  print(f_scores)
-  print(o_scores)
   
 if __name__ == "__main__":
   main()

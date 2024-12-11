@@ -25,17 +25,21 @@ def main():
   keywords = ["amazing", "deeply moving", "thrilling", "captivating", "mind-blowing", "brilliantly crafted", "intensely inspiring", "groundbreaking", "masterpiece", "enchanting", "delightfully quirky", "tedious", "overblown", "overly dramatic", "unimpressive", "laughable", "unbearable", "terrible", "awkward", "engaging"]
 
   # Get query scores
+  print("Getting query scores.")
   movie_data = pd.read_csv("movie_data.csv")
   q = Query()
   query_scores = q.run_query(movie_data, genres, keywords)
   
   # Get recommender scores
+  print("Getting recommender scores.")
   recommender_scores = recommend(data, liked_movies, disliked_movies)
   
   # Get final scores
+  print("Balancing scores.")
   final_scores, other_scores = balance(query_scores, recommender_scores)
   
   # Print the top 5 movies.
+  print("Getting top 5 movies.")
   sorted_movies = sorted(final_scores.keys(), key = lambda k: final_scores[k], reverse=True)
   to_print = ''
   
