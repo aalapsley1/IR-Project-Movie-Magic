@@ -38,16 +38,16 @@ def main():
     sorted_others = sorted(other_scores.keys(), key = lambda k: other_scores[k], reverse=True)
     i = 0
     for movie in sorted_movies:
-      to_print += str(i) + '. ' + movie + '\n'
+      to_print += str(i + 1) + '. ' + movie + '\n'
       i += 1
     for omovie in sorted_others:
       if i >= 5:
         break
-      to_print += str(i) + '. ' + omovie + '\n'
+      to_print += str(i + 1) + '. ' + omovie + '\n'
       i += 1
   else:
     for i in range(5):
-      to_print += str(i) + '. ' + sorted_movies[i] + '\n'
+      to_print += str(i + 1) + '. ' + sorted_movies[i] + '\n'
   
   print(to_print)
   
