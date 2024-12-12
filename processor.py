@@ -7,40 +7,6 @@ class Processor:
         self.genres = []
         self.keywords = []
 
-    def tokenize(self, text):
-        # Regex to find each attribute set within the localGPT output
-        liked_movies_pattern = r"([\"'{\[]?liked[_\s]?movies[\"'}\]]?\s*[:=]\s*.*?\[.*?\])"
-        disliked_movies_pattern = r"([\"'{\[]?disliked[_\s]?movies[\"'}\]]?\s*[:=]\s*.*?\[.*?\])"
-        genres_pattern = r"([\"'{\[]?genres[\"'}\]]?\s*[:=]\s*.*?\[.*?\])"
-        keywords_pattern = r"([\"'{\[]?keywords[\"'}\]]?\s*.*?\[:=]\s*.*?\[.*?\])"
-
-        # Find matches in the localGPT out
-        liked_movies_match = re.search(liked_movies_pattern, text, re.IGNORECASE)
-        disliked_movies_match = re.search(disliked_movies_pattern, text, re.IGNORECASE)
-        genres_match = re.search(genres_pattern, text, re.IGNORECASE)
-        keywords_match = re.search(keywords_pattern, text, re.IGNORECASE)
-
-        # Helper function
-        def extract_list(match):
-            if match:
-                # Extract content within the brackets
-                content = re.search(r"\[(.*?)\]", match.group(0))
-                if content:
-                    return [item.strip().strip('"') for item in content.group(1).split(",") if item.strip()]
-            return []
-
-        # Assign lists to respective variables
-        self.liked_movies = extract_list(liked_movies_match)
-        self.disliked_movies = extract_list(disliked_movies_match)
-        self.genres = extract_list(genres_match)
-        self.keywords = extract_list(keywords_match)
-
-    def getLikedMovies(self):
-        return self.liked_movies
-    
-    def getDislikedMovies(self):
-        return self.disliked_movies
-    
     def getKeywords(self):
         return self.keywords
     
@@ -48,20 +14,42 @@ class Processor:
         return self.genres
     
     def recvQuery(self, text):
-        origQuery = text
+        self.parse_answer(text)
         self.tokenize(text)
 
+    def parse_answer(self, answer):
+        liked_movies_pattern = r'\"Liked Movies\": \[(.*?)\]'
+        disliked_movies_pattern = r'\"Disliked Movies\": \[(.*?)\]'
+        genres_pattern = r'\"Genres\": \[(.*?)\]'
+        keywords_pattern = r'\"Keywords\": \[(.*?)\]'
 
-#text = """
-#DBased on your provided context, here are the recommendations organized into the four distinct categories you requested: "Liked Movies": ["Inception", "The Shawshank Redemption", "The Dark Knight", "Interstellar", "Parasite", "Whiplash", "The Matrix", "The Godfather", "Spirited Away", "The Grand Budapest Hotel"] "Disliked Movies": ["Transformers: Age of Extinction", "Twilight", "The Room", "Cats", "Battlefield Earth", "Fifty Shades of Grey", "Sharknado"] "Genres": ["Sci-Fi", "Thriller", "Action", "Crime", "Drama", "Comedy", "Animation", "Fantasy", "Adventure", "Romance", "Musical"] "Keywords": ["amazing", "deeply moving", "thrilling", "captivating", "mind-blowing", "brilliantly crafted", "intensely inspiring", "groundbreaking", "masterpiece", "enchanting", "delightfully quirky", "tedious", "overblown", "overly dramatic", "unimpressive", "laughable", "unbearable", "terrible", "awkward", "engaging"]
-#"""
+        self.liked_movies = self.extract_items(answer, liked_movies_pattern)
+        self.disliked_movies = self.extract_items(answer, disliked_movies_pattern)
+        self.genres = self.extract_items(answer, genres_pattern)
+        self.keywords = self.extract_items(answer, keywords_pattern)
 
-#init processor & tokenize example text
-#tokenizer = Processor()
-#tokenizer.tokenize(text)
+    def extract_items(self, text, pattern):
+        match = re.search(pattern, text)
+        if match:
+            items = match.group(1)
+            return [item.strip().strip('"') for item in items.split(',')]
+        return []
 
-# Output the parsed movie components
-#print("Liked Movies:", tokenizer.liked_movies)
-#print("Disliked Movies:", tokenizer.disliked_movies)
-#print("Genres:", tokenizer.genres)
-#print("Keywords:", tokenizer.keywords)
+    def tokenize(self, text):
+        # Implement your tokenize logic here
+        pass
+
+# # Example usage
+# text = """
+#   Sure, I'd be happy to help! Based on the user's query, here is the information I have gathered:\n["Liked Movies": ["Serotonin"], "Disliked Movies": ["Collateral Beauty"], "Genres": ["Comedy", "Drama"], "Keywords": ["feel-good"]]\nIt seems that the user likes the movie "Serotonin" and wants a similar feel-good movie. However, they did not enjoy "Collateral Beauty". The genres associated with this query are "Comedy" and "Drama", as those are the genres of the movies mentioned in the query. The keywords extracted from the query are "feel-good".
+#   """
+
+# # init processor & parse example text
+# processor = Processor()
+# processor.recvQuery(text)
+
+# # Output the parsed movie components
+# print("Liked Movies:", processor.liked_movies)
+# print("Disliked Movies:", processor.disliked_movies)
+# print("Genres:", processor.genres)
+# print("Keywords:", processor.keywords)

@@ -1,6 +1,9 @@
 movie_data.csv
 ratings_export.csv
 users_export.csv
+IrProject/movie_metadata.csv
+IrProject/metadata.pkl
+IrProject/movie_faiss_index.faiss
 __pycache__/data.cpython-311.pyc
 localGPT/
 __pycache__/
