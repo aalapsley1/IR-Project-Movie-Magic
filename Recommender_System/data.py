@@ -69,3 +69,6 @@ def get_movies():
   print('Num movies: ' + str(len(movies)))
   
   return movies
+
+if __name__ == "__main__":
+  download_data()
