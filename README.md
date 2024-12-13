@@ -9,7 +9,12 @@ Follow these steps to set up and run the project on your local machine.
 ### Prerequisites
 
 - Python 3.x
-- Conda
+   - Conda
+   - numpy
+   - pandas
+   - kagglehub
+   - surprise
+   - faiss_cpu
 - Node.js and npm
 - Git
 
@@ -27,8 +32,8 @@ Follow these steps to set up and run the project on your local machine.
 
 2. **Clone This Repository**
    ```bash
-   git clone <URL_OF_THIS_REPOSITORY>
-   cd <THIS_REPOSITORY>
+   git clone https://github.com/aalapsley1/IR-Project-Movie-Magic
+   cd IR-Project-Movie-Magic
    ```
 
 3. **Prepare Data**
@@ -36,11 +41,13 @@ Follow these steps to set up and run the project on your local machine.
      ```bash
      cd Recommender_System
      ```
+   - Download prerequisite libraries: `pip install conda pandas kagglehub surprise faiss_cpu`
    - Run the `Data.py` script to download necessary files:
      ```bash
      python Data.py
      ```
-   - Save the downloaded files in an appropriate location.
+   - Move the downloaded files to the `Recommender_System` folder. (The download location will be printed to the terminal)
+      - The movie_data.csv might have an issues. If so, open the file with vscode and press "Remove Unusual Line Terminators" when prompted with "Detected unusual line terminators".
 
 4. **Preprocess Data**
    - Return to the root repository:
