@@ -1,6 +1,6 @@
-# Project Title
+# Movie Magic (Movie Recommender System)
 
-A brief description of your project.
+[A brief description of your project.](https://sites.google.com/view/movie-magic-ir/home)
 
 ## Getting Started
 
